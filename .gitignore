@@ -1,0 +1,17 @@
+# cmake specific
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+
+# Build dir
+build*
+debug_build
+release_build
+/bin
+
+# IDEA
+.idea/
