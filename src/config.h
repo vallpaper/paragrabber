@@ -16,7 +16,7 @@ struct Config
 
     Config(std::string t_file_url, std::string t_download_dir, int t_threads)
         : file_url(t_file_url), download_dir(t_download_dir),
-            threads()
+            threads(t_threads)
     {};
 
     // stores given URL path example.com/some/path

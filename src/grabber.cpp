@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <regex>
+#include <cctype>
 
 #include <iostream> // test
 
@@ -83,6 +84,7 @@ void Grabber::consumer()
         m_curl.get(url, packet);
         std::cout << "\tsize: " << packet.raw.size() << "\n";
         std::cout << "\thash: " << m_hasher.hash(packet.raw) << "\n";
+        std::cout << "\tfile: " << get_file_name(url) << "\n";
     }
 }
 
@@ -104,26 +106,53 @@ void Grabber::get_file_content(const std::string & file_name, std::string & cont
 // Convert given URL into absolute URL
 // relative urls "/assets/..." => "example.com/assets/..."
 // absolute URL untouched
-std::string Grabber::get_absolute_url(const std::string url)
+std::string Grabber::get_absolute_url(const std::string url) const
 {
-    size_t pos_s = url.find_first_of("\"") + 1;
+    size_t pos_s = url.find_first_of("\"");
     size_t pos_e = url.find_last_of("\"");
+
+    if (pos_s == std::string::npos || pos_e == std::string::npos || pos_e <= pos_s)
+        return "";
+
+    // increment position after first " character
+    pos_s++;
 
     std::string url_part = url.substr(pos_s, pos_e - pos_s);
 
     if (url_part.length() == 0)
         return "";
+
     // two possible URLs
     // "//.." or "http..." -> absolute URLs
     // "/..", './', '../' -> relative URL - needs to appends to input URL
-
     if (url[pos_s] == '.' || (url[pos_s] == '/' && url[pos_s + 1] != '/'))
     {
-        // relative urls
         return m_config.domain + url_part;
     }
     else if (url[pos_s] == '/' && url[pos_s + 1] == '/')
         return "http:" + url_part;
 
     return url_part;
+}
+
+std::string Grabber::get_file_name(const std::string url) const
+{
+    // find last '/' and take everything until some special nasty characters
+    // that could be possible problem for file systems (at least good practice)
+
+    size_t pos_s = url.find_last_of('/');
+    if (pos_s == std::string::npos)
+        return "";
+
+    pos_s++;
+    size_t pos_e = pos_s;
+
+    while (pos_e < url.size() && (isalnum(url[pos_e]) || url[pos_e] == '.'
+            || url[pos_e] == '_'))
+        pos_e++;
+
+    if (pos_e <= pos_s)
+        return "";
+
+    return url.substr(pos_s, pos_e - pos_s);
 }

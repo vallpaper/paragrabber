@@ -25,11 +25,12 @@ public:
     // TODO: move somewhere else
     static void get_file_content(const std::string & file_name, std::string & content);
 
-    std::string get_absolute_url(const std::string url);
-
 private:
     // void producer();
     void consumer();
+
+    std::string get_absolute_url(const std::string url) const;
+    std::string get_file_name(const std::string url) const;
 
     std::deque<std::string>    m_files;
     std::unordered_set<std::string> m_files_visited;
