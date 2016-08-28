@@ -2,12 +2,12 @@
 // libcurl
 // libcrypto++-dev
 
-#include <iostream>
-
 #include "config.h"
 #include "grabber.h"
 #include "hash.h"
-// #include "io.h"
+
+#include <iostream>
+#include <fstream>
 
 void usage(void)
 {

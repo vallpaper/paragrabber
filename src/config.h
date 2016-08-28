@@ -29,7 +29,7 @@ struct Config
     std::string download_dir = "data/";
 
     // number of threads to run
-    int         threads = 4;
+    unsigned int    threads = 4;
 };
 
 #endif /* end of include guard: __CONFIG_HPP__ */

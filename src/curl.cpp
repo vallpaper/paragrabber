@@ -23,7 +23,7 @@ int Curl::get(const std::string & url, const std::string & data) const
     CURLcode res;
 
     if (!handle) // TODO: exception types
-        throw new Exception();
+        return -1;
 
     // URL set
     curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
@@ -33,6 +33,8 @@ int Curl::get(const std::string & url, const std::string & data) const
 
     // Set data where to write
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &data);
+
+    curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 1L);
 
     // Perform action
     res = curl_easy_perform(handle);
@@ -44,7 +46,7 @@ int Curl::get(const std::string & url, const std::string & data) const
         return 0;
     }
     else
-        throw new Exception();
+        return -1;
 }
 
 size_t Curl::write_data(void * in_buffer, size_t size, size_t nmemb, std::string * out_buffer)
