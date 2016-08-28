@@ -1,10 +1,12 @@
-//
 // Grabber: tool for download all links from given URL in parallel
 // Author:  Ondřej Cvacho
 // Libs:    libcurl-openssl-dev 7.47.0
 //          zlib1g-dev
 //          pthreads
 //
+// Restrictions:
+//  - download dir must exist
+
 #include "config.h"
 #include "grabber.h"
 #include "hash.h"
@@ -83,7 +85,17 @@ int main(int argc, char * argv[])
     std::vector<FileInfo> files;
     {
         Grabber grabber(config, adler32);
-        grabber.run();
+
+        try
+        {
+            grabber.run();
+        }
+        catch (std::exception & e)
+        {
+            std::cerr << "ERROR: Can't download given URL. Ending" << std::endl;
+            return 1;
+        }
+
         grabber.get_files_info(files);
     }
 

@@ -22,7 +22,6 @@ public:
 
     // Calculate Adler32 checksum of given data
     // @return      Adler32 checksum
-    //
     virtual unsigned long hash(const std::string & data) const;
 };
 

@@ -8,6 +8,8 @@
 #include <sstream>
 #include <thread>
 
+#include <iostream>
+
 Grabber::Grabber(Config & config, Hasher & hasher)
     : m_config(config), m_hasher(hasher)
 {
@@ -25,7 +27,10 @@ Grabber::~Grabber()
 FileInfo * Grabber::download_and_save(std::string & content, const std::string & url,
                                         const std::string & file_name) const
 {
-    m_curl.get(url, content);
+    bool ret = m_curl.get(url, content);
+
+    if (!ret)
+        return nullptr;
 
     unsigned int hash = m_hasher.hash(content);
 
@@ -35,15 +40,16 @@ FileInfo * Grabber::download_and_save(std::string & content, const std::string &
 
     FileInfo * info = new FileInfo(file_name, content.size(), hash_str.str(), url);
 
-    m_io.write_to_file(m_config.download_dir + info->hashed_name(), content);
+    ret = m_io.write_to_file(m_config.download_dir + info->hashed_name(), content);
+
+    if (!ret)
+        return nullptr;
 
     return info;
 }
 
 void Grabber::run()
 {
-    start_threads();
-
     // (1) Download given file and save
     std::string input;
 
@@ -51,10 +57,17 @@ void Grabber::run()
     file_name = (file_name == "") ? "index.html" : file_name;
 
     FileInfo * info = download_and_save(input, m_config.file_url, file_name);
+
+    if (info == nullptr)
+        throw std::exception();
+
     m_files_info.push_back(info);
     m_files_visited.insert(m_config.file_url);
 
-    // (2) Parse file and find all links
+    // (2) Start threads
+    start_threads();
+
+    // (3) Parse file and find all links
     std::regex url_regex("(href|src)=\"[^#][^\"]+\"");
     std::smatch match;
 
@@ -122,6 +135,13 @@ void Grabber::consumer()
         std::string content;
 
         FileInfo * info = download_and_save(content, url, get_file_name(url));
+
+        if (info == nullptr)
+        {
+            std::cerr << "file \"" << get_file_name(url) << "\" could not be downloaded" << std::endl;
+            continue;
+        }
+
         files_info.push_back(info);
     }
 

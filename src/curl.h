@@ -12,7 +12,10 @@ public:
     Curl();
     ~Curl();
 
-    int get(const std::string & url, std::string & data) const;
+    // Download file from the URL and stores into DATA
+    // @param  url  [in]
+    // @param  data [in/out]
+    bool get(const std::string & url, std::string & data) const;
 private:
     static size_t write_data(void * in_buffer, size_t size, size_t nmemb, std::string * out_buffer);
 };

@@ -12,19 +12,15 @@ Curl::~Curl()
     curl_global_cleanup();
 }
 
-
-// Download file from the URL and stores into DATA
-// @param  url  [in]
-// @param  data [in/out]
-//
-int Curl::get(const std::string & url, std::string & data) const
+bool Curl::get(const std::string & url, std::string & data) const
 {
     CURL * handle = curl_easy_init();
     CURLcode res;
 
     if (!handle)
-        return -1;
+        return false;
 
+    // Set curl options
     curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &data);
@@ -35,9 +31,9 @@ int Curl::get(const std::string & url, std::string & data) const
     curl_easy_cleanup(handle);
 
     if (res == CURLE_OK)
-        return 0;
+        return true;
     else
-        return -1;
+        return false;
 }
 
 // Callback function for storing recieved data into buffer
