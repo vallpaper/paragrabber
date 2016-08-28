@@ -3,11 +3,16 @@
 
 #include <string>
 
+// IOBuffer class
+// - provides functionality for writing data into files
+//
 class IOBuffer
 {
 public:
     IOBuffer() {};
-    // TODO: better return type
+
+    // stores data in CONTENT into file FILE_NAME
+    //
     bool write_to_file(const std::string & file_name, const std::string & content) const;
 private:
 };

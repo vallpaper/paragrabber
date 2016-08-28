@@ -1,14 +1,9 @@
 #include "curl.h"
-#include "exception.h"
 
 #include <curl/curl.h>
 
-#include <iostream>
-
 Curl::Curl()
 {
-    // libcurl global initialization
-    // need to be done before anything
     curl_global_init(CURL_GLOBAL_ALL);
 }
 
@@ -17,38 +12,37 @@ Curl::~Curl()
     curl_global_cleanup();
 }
 
-int Curl::get(const std::string & url, const std::string & data) const
+
+// Download file from the URL and stores into DATA
+// @param  url  [in]
+// @param  data [in/out]
+//
+int Curl::get(const std::string & url, std::string & data) const
 {
     CURL * handle = curl_easy_init();
     CURLcode res;
 
-    if (!handle) // TODO: exception types
+    if (!handle)
         return -1;
 
-    // URL set
     curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
-
-    // Set callback function for recieved data
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
-
-    // Set data where to write
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &data);
-
     curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 1L);
 
-    // Perform action
     res = curl_easy_perform(handle);
 
     curl_easy_cleanup(handle);
 
     if (res == CURLE_OK)
-    {
         return 0;
-    }
     else
         return -1;
 }
 
+// Callback function for storing recieved data into buffer
+// @return            number of recieved bytes
+//
 size_t Curl::write_data(void * in_buffer, size_t size, size_t nmemb, std::string * out_buffer)
 {
     size_t data_size = size * nmemb;

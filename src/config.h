@@ -10,26 +10,27 @@
 struct Config
 {
     Config()
-        : file_url(FILE_URL), download_dir(DOWNLOAD_DIR),
-            threads(THREADS)
+        : file_url(FILE_URL), base(FILE_URL),
+            download_dir(DOWNLOAD_DIR), threads(THREADS)
     {};
 
-    Config(std::string t_file_url, std::string t_download_dir, int t_threads)
-        : file_url(t_file_url), download_dir(t_download_dir),
-            threads(t_threads)
+    Config(std::string t_file_url, std::string t_download_dir,
+            int t_threads, std::string t_base)
+        : file_url(t_file_url), base(t_base),
+            download_dir(t_download_dir), threads(t_threads)
     {};
 
     // stores given URL path example.com/some/path
-    std::string file_url = "meetangee.com";
+    std::string     file_url;
 
-    // stores domain name - example.com
-    std::string domain = "meetangee.com";
+    // stores base name - example.com
+    std::string     base;
 
     // where to download all files
-    std::string download_dir = "data/";
+    std::string     download_dir;
 
     // number of threads to run
-    unsigned int    threads = 4;
+    unsigned int    threads;
 };
 
 #endif /* end of include guard: __CONFIG_HPP__ */
