@@ -17,7 +17,7 @@ Curl::~Curl()
     curl_global_cleanup();
 }
 
-int Curl::get(std::string const & url, RecvData & data) const
+int Curl::get(const std::string & url, const std::string & data) const
 {
     CURL * handle = curl_easy_init();
     CURLcode res;
@@ -32,7 +32,7 @@ int Curl::get(std::string const & url, RecvData & data) const
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
 
     // Set data where to write
-    curl_easy_setopt(handle, CURLOPT_WRITEDATA, &data.raw);
+    curl_easy_setopt(handle, CURLOPT_WRITEDATA, &data);
 
     // Perform action
     res = curl_easy_perform(handle);

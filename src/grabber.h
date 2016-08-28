@@ -4,6 +4,7 @@
 #include "config.h"
 #include "curl.h"
 #include "hash.h"
+#include "io.h"
 
 #include <deque>
 #include <string>
@@ -35,9 +36,10 @@ private:
     std::deque<std::string>    m_files;
     std::unordered_set<std::string> m_files_visited;
 
-    Config &                    m_config;
-    Hasher &                    m_hasher;
-    Curl                        m_curl;
+    const Config &                    m_config;
+    const Hasher &                    m_hasher;
+    const Curl                        m_curl;
+    const IOBuffer                    m_io;
 };
 
 #endif /* end of include guard: __GRABBER_H__ */

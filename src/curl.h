@@ -6,19 +6,13 @@
 
 #include <string>
 
-struct RecvData
-{
-    std::string raw;
-    std::string name;
-};
-
 class Curl
 {
 public:
     Curl();
     ~Curl();
 
-    int get(std::string const & url, RecvData & data) const;
+    int get(const std::string & url, const std::string & data) const;
 private:
     static size_t write_data(void * in_buffer, size_t size, size_t nmemb, std::string * out_buffer);
 };

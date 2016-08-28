@@ -18,16 +18,14 @@ void Grabber::run()
 
     // (1) Download given file
     // TODO
-    RecvData web;
-    m_curl.get(m_config.file_url, web);
+    std::string input;
+    m_curl.get(m_config.file_url, input);
 
-    std::cout << "After CURL " << web.raw.size() << "\n";
+    std::cout << "After CURL " << input.size() << "\n";
 
     // (2) Parse file and find all links
     // TODO
 
-    // load file into memory TODO - zbytecne
-    std::string input = web.raw;
     // get_file_content("data/index.html", input);
 
     std::regex url_regex("(href|src)=\"[^#][^\"]+\"");
@@ -66,11 +64,12 @@ void Grabber::run()
 
 void Grabber::consumer()
 {
-    RecvData packet;
     std::string url;
 
     while (true)
     {
+        std::string content;
+
         if (m_files.size() == 0)
             break;
 
@@ -81,10 +80,13 @@ void Grabber::consumer()
 
         // get the file
         std::cout << "downloading: " << url << "\n";
-        m_curl.get(url, packet);
-        std::cout << "\tsize: " << packet.raw.size() << "\n";
-        std::cout << "\thash: " << m_hasher.hash(packet.raw) << "\n";
+
+        m_curl.get(url, content);
+
+        std::cout << "\tsize: " << content.size() << "\n";
+        std::cout << "\thash: " << std::hex << m_hasher.hash(content) << "\n";
         std::cout << "\tfile: " << get_file_name(url) << "\n";
+        m_io.write_to_file(m_config.download_dir + get_file_name(url), content);
     }
 }
 

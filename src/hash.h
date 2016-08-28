@@ -10,14 +10,14 @@ class Hasher
 {
 public:
     Hasher() {};
-    virtual uint32_t hash(const std::string & data) const = 0;
+    virtual unsigned long hash(const std::string & data) const = 0;
 };
 
 class Adler32 : public Hasher
 {
 public:
     Adler32() {};
-    virtual uint32_t hash(const std::string & data) const;
+    virtual unsigned long hash(const std::string & data) const;
 };
 
 #endif /* end of include guard: __HASH_H__ */

@@ -4,7 +4,7 @@
 #include <string>
 
 #define FILE_URL        "meetangee.com"
-#define DOWNLOAD_DIR    "download"
+#define DOWNLOAD_DIR    "download/"
 #define THREADS         4
 
 struct Config
@@ -26,7 +26,7 @@ struct Config
     std::string domain = "meetangee.com";
 
     // where to download all files
-    std::string download_dir = "data";
+    std::string download_dir = "data/";
 
     // number of threads to run
     int         threads = 4;

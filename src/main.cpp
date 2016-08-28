@@ -1,10 +1,13 @@
 // libcurl-openssl-dev 7.47.0
+// libcurl
+// libcrypto++-dev
 
 #include <iostream>
 
 #include "config.h"
 #include "grabber.h"
 #include "hash.h"
+// #include "io.h"
 
 void usage(void)
 {
@@ -17,8 +20,10 @@ void usage(void)
 
 int main(int argc, const char * argv[])
 {
+    // TODO: input parse to config modification
     Config config;
     Adler32 adler32;
+
     Grabber grabber(config, adler32);
 
     grabber.run();

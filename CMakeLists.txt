@@ -13,7 +13,7 @@ add_definitions(-std=c++11 -pedantic -Wall -Wextra) # -Werror
 file(GLOB_RECURSE SRC "${PROJECT_SOURCE_DIR}/src/*.cpp") # "${PROJECT_SOURCE_DIR}/src/*.h"
 
 add_executable(${PROJECT_NAME} ${SRC})
-target_link_libraries(${PROJECT_NAME} -lcurl)
+target_link_libraries(${PROJECT_NAME} -lcurl -lz)
 
 if(APPLE)
     add_definitions(${PROJECT_NAME} -stdlib=libc++)
