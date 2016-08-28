@@ -99,6 +99,12 @@ int main(int argc, char * argv[])
         grabber.get_files_info(files);
     }
 
+    if (files.size() == 0)
+    {
+        std::cout << "No downloaded files found" << std::endl;
+        return 0;
+    }
+
     size_t min_size = 0;
     size_t max_size = 0;
     for (unsigned int i = 0; i < files.size(); i++)
