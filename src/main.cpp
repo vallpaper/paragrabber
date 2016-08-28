@@ -47,8 +47,8 @@ Config parse_input(int argc, char * argv[])
                 break;
             case 't':
             {
-                std::istringstream i(optarg);
-                i >> threads;
+                std::istringstream stream(optarg);
+                stream >> threads;
                 break;
             }
             case '?':
@@ -57,7 +57,7 @@ Config parse_input(int argc, char * argv[])
                 exit(1);
                 break;
             default:
-                std::cerr << "All undefined arguments will be set default value" << std::endl;
+                std::cerr << "All undefined arguments will be set to default value" << std::endl;
                 break;
         }
     }
@@ -92,7 +92,7 @@ int main(int argc, char * argv[])
         }
         catch (std::exception & e)
         {
-            std::cerr << "ERROR: Can't download given URL. Ending" << std::endl;
+            std::cerr << "ERROR: Can't download given URL. Ending." << std::endl;
             return 1;
         }
 
@@ -101,7 +101,7 @@ int main(int argc, char * argv[])
 
     if (files.size() == 0)
     {
-        std::cout << "No downloaded files found" << std::endl;
+        std::cout << "No downloaded files." << std::endl;
         return 0;
     }
 

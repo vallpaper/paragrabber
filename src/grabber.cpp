@@ -79,7 +79,7 @@ void Grabber::run()
         match = *next;
         std::string absolute_url = get_absolute_url(match.str());
 
-        if (m_files_visited.find(absolute_url) != m_files_visited.end())
+        if (absolute_url == "" || m_files_visited.find(absolute_url) != m_files_visited.end())
             continue;
 
         m_files_visited.insert(absolute_url);
@@ -138,7 +138,7 @@ void Grabber::consumer()
 
         if (info == nullptr)
         {
-            std::cerr << "file \"" << get_file_name(url) << "\" could not be downloaded" << std::endl;
+            std::cerr << "file \"" << info->name << "\" could not be downloaded" << std::endl;
             continue;
         }
 
@@ -180,12 +180,12 @@ std::string Grabber::get_absolute_url(const std::string url) const
     // two possible URLs
     // "//.." or "http..." -> absolute URLs
     // "/..", './', '../' -> relative URLs - needs to appends to input URL
-    if (url[pos_s] == '.' || (url[pos_s] == '/' && url[pos_s + 1] != '/'))
+    if (url_part[0] == '.' || (url_part[0] == '/' && url_part[1] != '/'))
     {
         // std::cout << m_config.base + url_part << std::endl;
-        return m_config.base + url_part;
+        return m_config.base + (url_part[0] == '.' ? "/" : "") + url_part;
     }
-    else if (url[pos_s] == '/' && url[pos_s + 1] == '/')
+    else if (url_part[0] == '/' && url_part[1] == '/')
         return "http:" + url_part;
 
     return url_part;
