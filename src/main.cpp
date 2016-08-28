@@ -1,7 +1,10 @@
-// libcurl-openssl-dev 7.47.0
-// libcurl
-// libcrypto++-dev
-
+/**
+ * Grabber: tool for download all links from given URL in parallel
+ * Author:  Ondřej Cvacho
+ * Libs:    libcurl-openssl-dev 7.47.0
+ *          zlib1g-dev
+ *          pthreads
+ */
 #include "config.h"
 #include "grabber.h"
 #include "hash.h"
@@ -19,8 +22,9 @@ void usage(void)
                 << std::endl;
 }
 
-// Very simple function to parse the input
-//
+/**
+ *  Very simple function to parse the input
+ */
 Config parse_input(int argc, char * argv[])
 {
     std::string url = FILE_URL;
@@ -64,7 +68,6 @@ int main(int argc, char * argv[])
     Adler32 adler32;
     Grabber grabber(config, adler32);
 
-    // Where all the magic happens
     grabber.run();
 
     return 0;
