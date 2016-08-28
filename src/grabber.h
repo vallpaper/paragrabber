@@ -36,15 +36,6 @@ public:
 
     void run();
 
-    // Opens given file by file_name and returns its content in content variable
-    // @params:
-    //  - file_name in
-    //  - content   in/out
-    // @return:
-    //  - size_t - file size or -1 if fails
-    // TODO: move somewhere else
-    static void get_file_content(const std::string & file_name, std::string & content);
-
 private:
     void start_threads();
     void consumer(unsigned int i);
@@ -55,7 +46,6 @@ private:
     std::deque<std::string>         m_files;
     std::unordered_set<std::string> m_files_visited;
 
-    // TODO: set vs. deque
     std::unordered_set<FileInfo *>  m_files_info;
 
     const Config &                  m_config;
