@@ -20,3 +20,10 @@ mkdir download
 	 - must exist! (if not, program exits) [default: download/]
 
 -t NUM = number of threads to run
+
+## Dependencies
+```
+libcurl-openssl-dev 7.47.0
+zlib1g-dev
+pthreads
+```
