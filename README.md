@@ -10,6 +10,7 @@ cmake ..
 make
 cd ../bin
 ./grabber
+mkdir download
 ```
 
 ## Arguments
