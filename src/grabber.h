@@ -54,6 +54,7 @@ public:
     // Copy all file_info structures to files
     // We used pointers for internal "moving"
     // to reduce call of copy construct of FileInfo.
+    // @param files [in/out]
     void get_files_info(std::vector<FileInfo> & files);
 
 private:
@@ -75,6 +76,11 @@ private:
 
     // Download file from URL into CONTENT buffer
     // and stores into FILE_NAME
+    //
+    // @param   content     [out] data store variable
+    // @param   url         [in]
+    // @param   file_name   [in]
+    // @return              FileInfo structure
     FileInfo * download_and_save(std::string & content, const std::string & url,
                                             const std::string & file_name) const;
 
