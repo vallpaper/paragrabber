@@ -161,7 +161,7 @@ void Grabber::start_threads()
 // Convert given URL into absolute URL
 // relative urls "/assets/..." => "example.com/assets/..."
 // absolute URL untouched
-std::string Grabber::get_absolute_url(const std::string url) const
+std::string Grabber::get_absolute_url(const std::string & url) const
 {
     size_t pos_s = url.find_first_of("\"");
     size_t pos_e = url.find_last_of("\"");
@@ -194,7 +194,7 @@ std::string Grabber::get_absolute_url(const std::string url) const
 // find last '/' and take everything until some special nasty characters
 // that could be possible problem for file systems
 //
-std::string Grabber::get_file_name(const std::string url) const
+std::string Grabber::get_file_name(const std::string & url) const
 {
     size_t pos_s = url.find_last_of('/');
     if (pos_s == std::string::npos)

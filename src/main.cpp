@@ -107,7 +107,7 @@ int main(int argc, char * argv[])
 
     size_t min_size = 0;
     size_t max_size = 0;
-    for (unsigned int i = 0; i < files.size(); i++)
+    for (size_t i = 0; i < files.size(); i++)
     {
         if (files[i].size > files[max_size].size)
             max_size = i;

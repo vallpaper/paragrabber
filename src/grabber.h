@@ -68,11 +68,11 @@ private:
 
     // Convert URL into absolute URL if not already
     //
-    std::string get_absolute_url(const std::string url) const;
+    std::string get_absolute_url(const std::string & url) const;
 
     // Get file name from the URL without any special characters.
     // May return an empty string
-    std::string get_file_name(const std::string url) const;
+    std::string get_file_name(const std::string & url) const;
 
     // Download file from URL into CONTENT buffer
     // and stores into FILE_NAME
