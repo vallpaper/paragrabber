@@ -210,7 +210,8 @@ std::string Grabber::get_file_name(const std::string url) const
     if (pos_e <= pos_s)
         return DEFAULT_FILE_NAME;
 
-    return url.substr(pos_s, pos_e - pos_s);
+    std::string file_name = url.substr(pos_s, pos_e - pos_s);
+    return file_name == "" ? DEFAULT_FILE_NAME : file_name;
 }
 
 void Grabber::get_files_info(std::vector<FileInfo> & files)
