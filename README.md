@@ -8,9 +8,10 @@ mkdir build
 cd build
 cmake ..
 make
+
 cd ../bin
-./grabber
 mkdir download
+./grabber
 ```
 
 ## Arguments
