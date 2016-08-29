@@ -114,11 +114,10 @@ int main(int argc, char * argv[])
 
         if (files[i].size < files[min_size].size)
             min_size = i;
-    }
 
-    for (unsigned int i = 0; i < files.size(); i++)
         std::cout << "file: " << files[i].name << std::endl
                     << "\thash: " << files[i].hash_str << std::endl;
+    }
 
     std::cout << "SMALLEST = " << files[min_size].name << " ["
                 << files[min_size].hash_str << "]" << std::endl

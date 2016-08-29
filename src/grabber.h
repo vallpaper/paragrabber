@@ -14,6 +14,8 @@
 #include <mutex>
 #include <thread>
 
+#define DEFAULT_FILE_NAME "default"
+
 // FileInfo struct
 // - holds information about downloaded file
 struct FileInfo

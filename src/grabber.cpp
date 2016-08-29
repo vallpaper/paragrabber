@@ -198,7 +198,7 @@ std::string Grabber::get_file_name(const std::string url) const
 {
     size_t pos_s = url.find_last_of('/');
     if (pos_s == std::string::npos)
-        return "";
+        return DEFAULT_FILE_NAME;
 
     pos_s++;
     size_t pos_e = pos_s;
@@ -208,7 +208,7 @@ std::string Grabber::get_file_name(const std::string url) const
         pos_e++;
 
     if (pos_e <= pos_s)
-        return "";
+        return DEFAULT_FILE_NAME;
 
     return url.substr(pos_s, pos_e - pos_s);
 }
