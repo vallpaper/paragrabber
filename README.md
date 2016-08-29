@@ -12,6 +12,8 @@ cd ../bin
 
 ## Arguments
 -u URL = URL adress to download [default: meetangee.com]
+
 -d DIR = local dir where to downloaded files are stored
 	 - must exist! (if not, no files are stored)
+
 -t NUM = number of threads to run
