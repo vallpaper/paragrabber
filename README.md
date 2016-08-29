@@ -3,12 +3,14 @@
 This is a project to qualify for interview.
 
 ## Make and run
+```shell
 mkdir build
 cd build
 cmake ..
 make
 cd ../bin
 ./grabber
+```
 
 ## Arguments
 -u URL = URL adress to download [default: meetangee.com]
